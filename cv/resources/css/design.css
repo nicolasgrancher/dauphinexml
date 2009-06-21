@@ -1,0 +1,58 @@
+@CHARSET "ISO-8859-1";
+* {
+	font-family: Arial;
+	font-size: 14px;
+}
+html, body {
+	margin: 0;
+	padding: 0;
+	height: 100%;
+}
+div#wrap {
+	margin: auto;
+	width: 800px;
+	border-left: 1px solid silver;
+	border-right: 1px solid silver;
+	height: 100%;
+}
+
+div#header {
+	height: 100px;
+	background-image: url(images/banniere.jpg);
+}
+
+ul#menu {
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	height: 40px;
+	background-color: gray;
+}
+ul#menu li {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	float: left;
+}
+ul#menu li a {
+	display: block;
+	height: 20px;
+	width: 100px;
+	padding: 10px 20px;
+	background-color: gray;
+	text-align: center;
+	text-decoration: none;
+}
+ul#menu li a:hover {
+	background-color: silver;
+}
+
+div#content {
+	clear: both;
+	padding: 2em;
+}
+
+div#footer {
+	font-size: 10px;
+	text-align: center;
+}

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<listecv>
+	<cv id="1">
+		<nom>Grancher</nom>
+		<prenom>Nicolas</prenom>
+		<age>25</age>
+		<experiences>
+			<exprerience>
+				<annee_debut></annee_debut>
+				<annee_fin></annee_fin>
+				<description></description>
+			</exprerience>
+		</experiences>
+		<formations>
+			<formation>
+				<annee_debut></annee_debut>
+				<annee_fin></annee_fin>
+				<description></description>
+				<niveau></niveau>
+			</formation>
+		</formations>
+		<competences>
+			<competence>
+				<nom></nom>
+				<niveau></niveau>
+			</competence>
+		</competences>
+		<diver></diver>
+	</cv>
+	<cv id="2">
+		<nom>Mizrahi</nom>
+		<prenom>Jonathan</prenom>
+		<age>24</age>
+	</cv>
+</listecv>
