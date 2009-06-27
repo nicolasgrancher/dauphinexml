@@ -2,8 +2,8 @@
 
 class Profil {
 	const EXIST_ADMIN_LOGIN = 'admin';
-	const EXIST_ADMIN_PASSWORD = 'admin';
-	//const EXIST_ADMIN_PASSWORD = 'thetys647';
+	//const EXIST_ADMIN_PASSWORD = 'admin';
+	const EXIST_ADMIN_PASSWORD = 'thetys647';
 	
 	public $attributs;
 	private static $_listeAttributs = array('nom', 'prenom', 'age', 'experiences', 'formations', 'competences', 'divers');
@@ -50,19 +50,32 @@ class Profil {
 	function creer() {
 		$xmlRequest = new XMLRequest($this->login, $this->password);
 		
-		$query = '<a>test</a>';
+		$query = '<cv id="'.$this->login.'">';
 		foreach ($this->attributs as $key => $value) {
 			$query .= "<$key>$value</$key>";
 		}
+		$query .= '</cv>';
 		
 		$xmlRequest->store($query, $this->login);
 	}
 	
 	function sauvegarder() {
 		$xmlRequest = new XMLRequest($this->login, $this->password);
+		$query = 'exists("cv/'.$this->login.'")';
+		$result = $xmlRequest->executeQuery($query);
+		if($result["XML"] == "false") {
+		    $this->creer();
+		} elseif($result["XML"] == "true") {
+		    $this->update();
+		} else {
+		    throw new Exception("Erreur lors de la sauvagarde de vos informations");
+		}
+	}
 		
+	function update() {
+	    $xmlRequest = new XMLRequest($this->login, $this->password);
 		$xupdate  = "<xupdate:modifications version='1.0' xmlns:xupdate='http://www.xmldb.org/xupdate'>";
-		$xupdate .= "	<xupdate:update select='//cv[@id=\"" . $this->id . "\"]'>";
+		$xupdate .= "	<xupdate:update select='//cv[@id=\"" . $this->login . "\"]'>";
 		foreach ($this->attributs as $key => $value) {
 			$xupdate .= "		<$key>$value</$key>";
 		}

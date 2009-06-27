@@ -1,7 +1,7 @@
 <?php
 
 class XMLRequest {
-	const EXIST_DBNAME		=	'/db/cv/';
+	const EXIST_DBNAME		=	'/db/cv';
 	private $exist_login	=	'';
     private $exist_password	=	'';
 	
@@ -57,7 +57,8 @@ class XMLRequest {
 	function store($query, $login) {
 		$this->connect(true);
 		// Store Document
-		echo $this->db->store($query, 'UTF-8', self::EXIST_DBNAME.'/'.$login.'.xml', true);
+		if(!$this->db->store($query, 'UTF-8', self::EXIST_DBNAME.'/'.$login.'.xml', true))
+    		echo $this->db->getError();
 	
 		$this->disconnect();
 	}
