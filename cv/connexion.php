@@ -1,4 +1,4 @@
-<form method="post" action="">
+<form method="post" action="?page=connexion">
 	<table>
 		<tr>
 			<th><label for="login">Login : </label></th>
@@ -9,7 +9,8 @@
 			<td><input type="text" id="mdp" name="mdp" /></td>
 		</tr>
 		<tr>
-			<td colspan="2"><input type="submit" value="S'inscrire" /></td>
+			<td colspan="2"><input type="submit" value="Connexion" /></td>
 		</tr>
 	</table>
 </form>
+<a href="?page=inscription">Vous n'êtes pas inscrit ? Cliquez ici</a>

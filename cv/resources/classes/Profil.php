@@ -2,7 +2,8 @@
 
 class Profil {
 	const EXIST_ADMIN_LOGIN = 'admin';
-	const EXIST_ADMIN_PASSWORD = 'thetys647';
+	const EXIST_ADMIN_PASSWORD = 'admin';
+	//const EXIST_ADMIN_PASSWORD = 'thetys647';
 	public $id;
 	public $attributs;
 	private static $_listeAttributs = array('nom', 'prenom', 'age', 'experiences', 'formations', 'competences', 'divers');
@@ -76,11 +77,14 @@ class Profil {
 	
 	function connexion($login, $password) {
 	    $query = 'xmldb:exists-user("'.$login.'")';
-        $xmlRequest = new XMLRequest('admin', 'thetys647');
+        $xmlRequest = new XMLRequest(self::EXIST_ADMIN_LOGIN, self::EXIST_ADMIN_PASSWORD);
         $result = $xmlRequest->executeQuery($query);
         if(isset($result["XML"]) && $result["XML"] == "true"){
             $this->login = $login;
             $this->password = $password;
+            return true;
+        }else{
+        	return false;
         }
 	}
 }

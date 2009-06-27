@@ -18,11 +18,14 @@ switch ($page) {
     case 'connexion' :
 	    $titre = 'Connexion';
 	    $page = 'connexion.php';
-        if(isset($_POST['login']) && isset($_POST['mdp'])) {
-            $profil = new Profil();
-            $profil->connexion($_POST['login'], $_POST['mdp']);
-            $_SESSION['profil'] = $profil;
-            header("Location: index.php");
+		if(isset($_POST['login']) && isset($_POST['mdp'])) {
+			$profil = new Profil();
+			if($profil->connexion($_POST['login'], $_POST['mdp'])){
+	            $_SESSION['profil'] = $profil;
+	            header("Location: index.php");
+			}else{
+				$message = 'Login ou mot de passe incorrect.<br /><br /><a href="?page=connexion" title="Connexion">Retour</a>';
+			}
         }
 	    break;
     case 'deconnexion' :
@@ -32,10 +35,8 @@ switch ($page) {
     case 'inscription' :
 	    $titre = 'Inscription';
 	    $page = 'inscription.php';
-	    //echo "inscription<br/>";
 	    try {
-	        if($_POST['login'] != "" && $_POST['mdp'] != "") {
-	            //echo "if<br/>";
+	        if(!empty($_POST['login']) and !empty($_POST['mdp'])) {
                 $profil = new Profil();
                 $profil->inscription($_POST['login'], $_POST['mdp']);
                 $_SESSION['profil'] = $profil;
@@ -64,24 +65,17 @@ switch ($page) {
 
 <div id="wrap">
 	<div id="header">
-		Projet XML
-	</div>
-	<div id="connexion">
-	    <?php if(isset($_SESSION['profil'])): ?>
-    	    <a href="?page=deconnexion" title="Se d&eacute;connecter">Se d&eacute;connecter</a>
-    	<?php else: ?>
-    	    <a href="?page=connexion" title="Se connecter">Se connecter</a>
-    	<?php endif ?>
-	</div>
-	<div id="inscription">
-	    <?php if(!isset($_SESSION['profil'])): ?>
-    	    <a href="?page=inscription" title="S'inscrire">S'inscrire</a>
-	    <?php endif ?>
+		<h1>Dauphine - M2 Apprentissage - Projet XML</h1>
 	</div>
 	<ul id="menu">
 		<li><a href="?page=accueil" title="Retour à l'accueil">Accueil</a></li>
 		<li><a href="?page=recherche" title="Rechercher des CV">Recherche</a></li>
 		<li><a href="?page=mon_cv" title="Gérer mon CV">Mon CV</a></li>
+		<?php if(isset($_SESSION['profil'])): ?>
+		<li><a href="?page=deconnexion" title="Se déconnecter">Déconnexion</a></li>
+		<?php else: ?>
+		<li><a href="?page=connexion" title="Se connecter">Connexion</a></li>
+		<?php endif ?>
 	</ul>
 	
 	<div id="content">
