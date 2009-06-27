@@ -1,6 +1,8 @@
 <?php
 
 class Profil {
+	const EXIST_ADMIN_LOGIN = 'admin';
+	const EXIST_ADMIN_PASSWORD = 'thetys647';
 	public $id;
 	public $attributs;
 	private static $_listeAttributs = array('nom', 'prenom', 'age', 'experiences', 'formations', 'competences', 'divers');
@@ -62,7 +64,7 @@ class Profil {
 	
 	function inscription($login, $password) {
         $query = 'xmldb:exists-user("'.$login.'")';
-        $xmlRequest = new XMLRequest('admin', 'thetys647');
+        $xmlRequest = new XMLRequest(self::EXIST_ADMIN_LOGIN, self::EXIST_ADMIN_PASSWORD);
         $result = $xmlRequest->executeQuery($query);
         if(isset($result["XML"]) && $result["XML"] == "false"){
             $query = '<toto>{xmldb:create-user("'.$login.'","'.$password.'","cv","/db/cv")}</toto>';
