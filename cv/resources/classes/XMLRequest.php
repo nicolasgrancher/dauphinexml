@@ -62,10 +62,11 @@ class XMLRequest {
 	
 		$this->disconnect();
 	}
-	function update($xupdate) {
+	function update($docname, $xupdate) {
 		$this->connect(true);
 		
-		echo $this->db->xupdateResource(self::EXIST_DBNAME, $xupdate);
+		if(!$this->db->xupdateResource(self::EXIST_DBNAME.'/'.$docname, $xupdate))
+    		echo "<pre>".$this->db->getError()."</pre>";
 		
 		$this->disconnect();
 	}

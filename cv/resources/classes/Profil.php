@@ -21,7 +21,6 @@ class Profil {
 			    $result = $xmlRequest->executeQuery($query);
 			
 			    if ( !empty($result["XML"]) ){
-			    	echo  $result["XML"];
 			        $this->attributs[$attribut] = $result["XML"];
 			    }
 				    /*foreach ( $result["XML"] as $r) {
@@ -82,7 +81,7 @@ class Profil {
 		$xupdate .= "	</xupdate:update>";
 		$xupdate .= "</xupdate:modifications>";
 		
-		$xmlRequest->update($xupdate);
+		$xmlRequest->update($this->login.'.xml', $xupdate);
 	}
 	
 	function inscription($login, $password) {
