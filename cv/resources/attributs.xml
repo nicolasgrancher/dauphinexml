@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<attributs>
+    <attribut obligatoire="true" >nom</attribut>
+    <attribut obligatoire="true" >prenom</attribut>
+    <attribut obligatoire="true" >age</attribut>
+    <attribut>
+        experiences
+        <attribut obligatoire="true" multiple="true" hidden="true">
+            experience
+            <attribut obligatoire="true" >intitule</attribut>
+            <attribut obligatoire="true" >annee_debut</attribut>
+            <attribut obligatoire="true" >annee_fin</attribut>
+            <attribut >description</attribut>
+        </attribut>
+    </attribut>
+    <attribut obligatoire="true">
+        formations
+        <attribut obligatoire="true" multiple="true" hidden="true">
+            formation
+            <attribut obligatoire="true" >intitule</attribut>
+            <attribut obligatoire="true" >annee_debut</attribut>
+            <attribut obligatoire="true" >annee_fin</attribut>
+            <attribut >description</attribut>
+        </attribut>
+    </attribut>
+    <attribut >
+        competences
+        <attribut obligatoire="true" multiple="true" hidden="true">
+            competence
+            <attribut obligatoire="true" >intitule</attribut>
+            <attribut obligatoire="true" >niveau</attribut>
+            <attribut  >description</attribut>
+        </attribut>
+    </attribut>
+    <attribut >divers</attribut>
+</attributs>
