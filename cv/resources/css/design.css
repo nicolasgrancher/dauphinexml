@@ -47,7 +47,8 @@ ul#menu li a {
 	text-decoration: none;
 }
 ul#menu li a:hover {
-	background-color: #38b2e1;
+	color: #2c68a7;
+	background-color: #f4f8fb;
 }
 
 div#content {
