@@ -23,6 +23,10 @@ div#header {
 	background-image: url(../images/banniere.jpg);
 	text-indent: -99999px;
 }
+div#header * {
+	margin: 0;
+	padding: 0;
+}
 
 ul#menu {
 	margin: 0;
