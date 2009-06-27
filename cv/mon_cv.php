@@ -1,5 +1,7 @@
 <?php
-$profil = new Profil();
+
+//$profil = new Profil();
+$profil = $_SESSION['profil'];
 $profil->id = 1;
 $profil->initEmpty();
 
