@@ -1,11 +1,16 @@
 <?php
 
 class XMLRequest {
-	const EXIST_DBNAME		=	'/db/cv/cv.xml';
-	const EXIST_LOGIN		=	'cv';
-	const EXIST_PASSWORD	=	'';
+	const EXIST_DBNAME		=	'/db/cv';
+	private $exist_login	=	'';
+    private $exist_password	=	'';
 	
 	private $db;
+	
+	function __construct($login, $password) {
+        $this->exist_login = $login;
+        $this->exist_password = $password;
+	}
 	
 	/**
 	 * Se connecte à la base eXist
@@ -14,9 +19,9 @@ class XMLRequest {
 	 */
 	private function connect($admin = false) {
 		if($admin) {
-			$this->db = new eXistAdmin(self::EXIST_LOGIN, self::EXIST_PASSWORD, 'http://127.0.0.1:8080/exist/services/Admin?wsdl');
+			$this->db = new eXistAdmin($this->exist_login, $this->exist_password, 'http://127.0.0.1:8080/exist/services/Admin?wsdl');
 		} else {
-			$this->db = new eXist(self::EXIST_LOGIN, self::EXIST_PASSWORD);
+			$this->db = new eXist($this->exist_login, $this->exist_password);
 		}
 		
 		if(!$this->db->connect()) throw new Exception($this->db->getError());

@@ -1,21 +1,52 @@
 <?php
 require_once "resources/classes/autoload.php";
 
-$page = isset($_GET['page']) ? $_GET['page'] : null;
-switch ($page) {
-	case 'recherche' :
-		$titre = 'Recherche';
-		$page = 'recherche.php';
-		break;
-	case 'mon_cv' :
-		$titre = 'Mon CV';
-		$page = 'mon_cv.php';
-		break;
-	default :
-		$titre = 'Accueil';
-		$page = 'accueil.php';
-		break;
+try{
+    $page = isset($_GET['page']) ? $_GET['page'] : null;
+    switch ($page) {
+	    case 'recherche' :
+		    $titre = 'Recherche';
+		    $page = 'recherche.php';
+		    break;
+	    case 'mon_cv' :
+		    $titre = 'Mon CV';
+		    $page = 'mon_cv.php';
+		    break;
+        case 'connexion' :
+		    $titre = 'Connexion';
+		    $page = 'connexion.php';
+	        if(isset($_POST['login']) && isset($_POST['mdp'])) {
+                $profil = new Profil();
+                $profil->connexion($_POST['login'], $_POST['mdp']);
+                session_start();
+                $_SESSION['profil'] = $profil;
+                header("Location: index.php");
+            }
+		    break;
+        case 'deconnexion' :
+            session_destroy();
+            header("Location: index.php");
+            break;
+	    case 'inscription' :
+		    $titre = 'Inscription';
+		    $page = 'inscription.php';
+		    if($_POST['login'] != "" && $_POST['mdp'] != "") {
+                $profil = new Profil();
+                $profil->inscription($_POST['login'], $_POST['mdp']);
+                session_start();
+                $_SESSION['profil'] = $profil;
+                header("Location: index.php");
+            }
+		    break;
+	    default :
+		    $titre = 'Accueil';
+		    $page = 'accueil.php';
+		    break;
+    }
+} catch(Exception $e) {
+    $message = $e;
 }
+
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -32,6 +63,18 @@ switch ($page) {
 	<div id="header">
 		Projet XML
 	</div>
+	<div id="connexion">
+	    <?php if(isset($_SESSION['profil'])): ?>
+    	    <a href="?page=deconnexion" title="Se d&eacute;connecter">Se d&eacute;connecter</a>
+    	<?php else: ?>
+    	    <a href="?page=connexion" title="Se connecter">Se connecter</a>
+    	<?php endif ?>
+	</div>
+	<div id="inscription">
+	    <?php if(!isset($_SESSION['profil'])): ?>
+    	    <a href="?page=inscription" title="S'inscrire">S'inscrire</a>
+	    <?php endif ?>
+	</div>
 	<ul id="menu">
 		<li><a href="?page=accueil" title="Retour à l'accueil">Accueil</a></li>
 		<li><a href="?page=recherche" title="Rechercher des CV">Recherche</a></li>
@@ -39,7 +82,12 @@ switch ($page) {
 	</ul>
 	
 	<div id="content">
-		<?php require_once $page; ?>
+		<?php 
+		if(!isset($message))
+    		require_once $page; 
+    	else
+    	    echo $message;
+    	?>
 	</div>
 	
 	<div id="footer">
