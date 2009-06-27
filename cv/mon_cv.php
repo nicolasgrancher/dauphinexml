@@ -1,8 +1,5 @@
 <?php
-
-//$profil = new Profil();
 $profil = $_SESSION['profil'];
-$profil->id = 1;
 $profil->initEmpty();
 
 // traitement de l'action du formulaire

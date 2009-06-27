@@ -4,49 +4,58 @@ class Profil {
 	const EXIST_ADMIN_LOGIN = 'admin';
 	const EXIST_ADMIN_PASSWORD = 'admin';
 	//const EXIST_ADMIN_PASSWORD = 'thetys647';
-	public $id;
+	
 	public $attributs;
 	private static $_listeAttributs = array('nom', 'prenom', 'age', 'experiences', 'formations', 'competences', 'divers');
 	private $login;
 	private $password;
-		
-	function __construct() {
-		
-	}
-
 	
 	function rechercheAttributs () {
-	    foreach($this->_listeAttributs as $attribut) {
-	        $this->attributs[$attribut] = "";
-		    $query = 'for $attribut in collection("cv")//cv/element()
-		                let $cv := $attribut/parent::node()
-		                where $cv[@id="' . $this->login . '"] and $attribut/name()="'.$attribut.'" 
-		                return $attribut/text()';
-		    $xmlRequest = new XMLRequest($this->login, $this->password);
-		    $result = $xmlRequest->executeQuery($query);
-		
-		    if ( !empty($result["XML"]) ){
-		        $this->attributs[$attribut] = $result["XML"];
+		try {
+		    foreach(self::$_listeAttributs as $attribut) {
+			    $query = 'for $attribut in collection("cv")//cv/element()
+			                let $cv := $attribut/parent::node()
+			                where $cv[@id="' . $this->login . '"] and $attribut/name()="'.$attribut.'" 
+			                return $attribut/text()';
+			    $xmlRequest = new XMLRequest($this->login, $this->password);
+			    $result = $xmlRequest->executeQuery($query);
+			
+			    if ( !empty($result["XML"]) ){
+			    	echo  $result["XML"];
+			        $this->attributs[$attribut] = $result["XML"];
+			    }
+				    /*foreach ( $result["XML"] as $r) {
+					    $tmp = array();
+					    eregi('^<([a-zA-Z0-9_]+)>([a-zA-Z0-9_]*)</[a-zA-Z0-9_]+>$', $r, $tmp);
+					    $balise = $tmp[1];
+					    $valeur = $tmp[2];
+					
+					
+					    $this->attributs[$balise] = $valeur;
+				    }*/
 		    }
-			    /*foreach ( $result["XML"] as $r) {
-				    $tmp = array();
-				    eregi('^<([a-zA-Z0-9_]+)>([a-zA-Z0-9_]*)</[a-zA-Z0-9_]+>$', $r, $tmp);
-				    $balise = $tmp[1];
-				    $valeur = $tmp[2];
-				
-				
-				    $this->attributs[$balise] = $valeur;
-			    }*/
-	    }
-		//} else {
-		//	throw new Exception('Une erreur est survenue lors de la recherche de votre cv.');
-		//}
+		}
+		catch (Exception $e) {
+			$e;
+			$this->creer();
+		}
 	}
 	
 	function initEmpty() {
 		foreach (self::$_listeAttributs as $attribut) {
 			$this->attributs[$attribut] = null;
 		}
+	}
+	
+	function creer() {
+		$xmlRequest = new XMLRequest($this->login, $this->password);
+		
+		$query = '<a>test</a>';
+		foreach ($this->attributs as $key => $value) {
+			$query .= "<$key>$value</$key>";
+		}
+		
+		$xmlRequest->store($query, $this->login);
 	}
 	
 	function sauvegarder() {
