@@ -10,18 +10,46 @@ class Profil {
 	private $login;
 	private $password;
 	
-	function rechercheAttributs () {
+	function afficherFormulaire() {
+	    $xmlRequest = new XMLRequest(self::EXIST_ADMIN_LOGIN, self::EXIST_ADMIN_PASSWORD);
+		$query = 'exists(document("cv/'.$this->login.'.xml"))';
+		$result = $xmlRequest->executeQuery($query);
+		if($result["XML"] == "false") {
+	        $query = 'document("cv/config/attributs.xml")/attributs';
+	        $result = $xmlRequest->executeQuery($query);
+	
+	        $xml = new DOMDocument;
+            $xml->loadXML(trim($result["XML"]));
+
+            $xsl = new DOMDocument;
+            $xsl->load('resources/inscription.xsl');
+
+            // Configuration du transformateur
+            $proc = new XSLTProcessor;
+            $proc->importStyleSheet($xsl); // attachement des règles xsl
+
+            echo $proc->transformToXML($xml);
+            
+        } elseif($result["XML"] == "true") {
+        
+        } else {
+		    throw new Exception("Erreur durant l'affichage.");
+		}
+	}
+	
+	function rechercheAttributs ($node="cv") {
 		try {
 		    foreach(self::$_listeAttributs as $attribut) {
-			    $query = 'for $attribut in collection("cv")//cv/element()
+			    $query = 'for $attribut in collection("cv")//'.$node.'/element()
 			                let $cv := $attribut/parent::node()
 			                where $cv[@id="' . $this->login . '"] and $attribut/name()="'.$attribut.'" 
-			                return $attribut/text()';
+			                return $attribut';
 			    $xmlRequest = new XMLRequest($this->login, $this->password);
 			    $result = $xmlRequest->executeQuery($query);
 			
 			    if ( !empty($result["XML"]) ){
-			        $this->attributs[$attribut] = $result["XML"];
+			        echo '<pre>'.htmlspecialchars($result["XML"]).'</pre>';
+			        //$this->attributs[$attribut] = $result["XML"];
 			    }
 				    /*foreach ( $result["XML"] as $r) {
 					    $tmp = array();

@@ -30,14 +30,28 @@
     </xsl:template>
     
     <xsl:template match="attribut[./attribut]">
+        <xsl:variable name="child-names">
+            <xsl:for-each select="./attribut">
+                <xsl:text>'</xsl:text>
+                <xsl:value-of select="text()" />
+                <xsl:text>'</xsl:text>
+                <xsl:if test="position() != last()">, </xsl:if>
+            </xsl:for-each>
+        </xsl:variable>
         <tr>
 		    <th><xsl:value-of select="text()" /> : </th>
 		    <td>
-		        <table>
-		            <xsl:apply-templates select="./attribut[not(./attribut)]" />
-		            <xsl:apply-templates select="./attribut[./attribut]" />
+		        <table id="{text()}">
+		            <tr>
+    		            <xsl:for-each select="./attribut">
+    		               <td></td>
+    		            </xsl:for-each>
+		            </tr>
+	                <!--<xsl:apply-templates select="./attribut[not(./attribut)]" />
+	                <xsl:apply-templates select="./attribut[./attribut]" /> -->
 		        </table>
 		    </td>
+            <td><input type="button" onclick="addline(document.getElementById('{text()}'), new Array({$child-names}))" value='Ajouter'/></td>
 	    </tr>
     </xsl:template>
 

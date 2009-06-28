@@ -1,6 +1,6 @@
 <?php
-//$profil = $_SESSION['profil'];
-//$profil->initEmpty();
+$profil = $_SESSION['profil'];
+$profil->initEmpty();
 
 // traitement de l'action du formulaire
 if(!empty($_POST)) {
@@ -12,9 +12,8 @@ if(!empty($_POST)) {
 }
 
 try{
-    require_once "resources/classes/autoload.php";
+
 	// récupération des infos du profil
-	//$profil->rechercheAttributs();
 	
 	$xmlRequest = new XMLRequest("admin", "thetys647");
 	$query = 'document("cv/config/attributs.xml")/attributs';

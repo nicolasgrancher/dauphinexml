@@ -12,6 +12,7 @@ switch ($page) {
 	    $titre = 'Mon CV';
 	    $page = 'mon_cv.php';
 	    if(!isset($_SESSION["profil"])) {
+
             header("Location: index.php?page=connexion");
         }
 	    break;
@@ -59,6 +60,7 @@ switch ($page) {
 	<title>CV - <?=$titre?></title>
 	<link rel="stylesheet" type="text/css" href="resources/css/design.css" media="screen" />
 	<link rel="stylesheet" type="text/css" href="resources/css/styles.css" media="screen" />
+	<script language="javascript" type="text/javascript" src="resources/js/functions.js" ></script>
 </head>
 
 <body>
