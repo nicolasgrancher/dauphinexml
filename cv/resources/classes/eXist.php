@@ -184,6 +184,8 @@ class eXist
 		  if ( !empty($result["XML"]) )
 		  	foreach ( $result["XML"] as $xml)
 		  		print htmlspecialchars($xml) . "<br />";
+		  else
+		    print htmlspecialchars($xml) . "<br />";
 	      print "</pre>";
 	      print "======================================================";
 	  }

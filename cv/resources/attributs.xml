@@ -10,7 +10,7 @@
             <attribut obligatoire="true" >intitule</attribut>
             <attribut obligatoire="true" >annee_debut</attribut>
             <attribut obligatoire="true" >annee_fin</attribut>
-            <attribut >description</attribut>
+            <attribut input="textarea">description</attribut>
         </attribut>
     </attribut>
     <attribut obligatoire="true">
@@ -20,7 +20,7 @@
             <attribut obligatoire="true" >intitule</attribut>
             <attribut obligatoire="true" >annee_debut</attribut>
             <attribut obligatoire="true" >annee_fin</attribut>
-            <attribut >description</attribut>
+            <attribut input="textarea">description</attribut>
         </attribut>
     </attribut>
     <attribut >
@@ -29,8 +29,8 @@
             competence
             <attribut obligatoire="true" >intitule</attribut>
             <attribut obligatoire="true" >niveau</attribut>
-            <attribut  >description</attribut>
+            <attribut input="textarea">description</attribut>
         </attribut>
     </attribut>
-    <attribut >divers</attribut>
+    <attribut input="textarea">divers</attribut>
 </attributs>
