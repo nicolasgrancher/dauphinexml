@@ -188,17 +188,21 @@ class Profil {
 			$cv = array();
 			
 			$xmlRequest = new XMLRequest(self::EXIST_ADMIN_LOGIN, self::EXIST_ADMIN_PASSWORD);
-			/*$query = 'collection("cv")/cv';
+			$query = 'collection("cv")/cv';
 			if(!empty($champs)) {
 				$query .= '[';
 				foreach ($champs as $key => $value) {
-					if(!empty($value)) {
-						$query .= 'contains(' . $key .', "' . $value . '")';
+					$tmp = explode(';', $value);
+					foreach ($tmp as $v) {
+						$v = trim($v);
+						if(!empty($v)) {
+							$query .= 'contains(' . $key .', "' . $v . '") or contains(node()/' . $key . ', "' . $v . '") or ';
+						}
 					}
 				}
-				$query .= ']';
-			}*/
-			$query = 'for $attr in collection("cv")/cv ';
+				$query .= '0]';
+			}
+			/*$query = 'for $attr in collection("cv")/cv ';
 			if(!empty($champs)) {
 				foreach ($champs as $key => $value) {
 					if(!empty($value)) {
@@ -206,7 +210,7 @@ class Profil {
 					}
 				}
 			}
-			$query .= 'return $attr ';
+			$query .= 'return $attr ';*/
 			$result = $xmlRequest->executeQuery($query);
 			
 			$data = '<liste-cv>';
