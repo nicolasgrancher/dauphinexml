@@ -192,15 +192,15 @@ class Profil {
 			if(!empty($champs)) {
 				$query .= '[';
 				foreach ($champs as $key => $value) {
-					$tmp = explode(';', $value);
+					$tmp = explode(' ', $value);
 					foreach ($tmp as $v) {
 						$v = trim($v);
 						if(!empty($v)) {
-							$query .= 'contains(' . $key .', "' . $v . '") or contains(node()/' . $key . ', "' . $v . '") or ';
+							$query .= 'contains(' . $key .', "' . $v . '") or contains(node()/' . $key . ', "' . $v . '") and ';
 						}
 					}
 				}
-				$query .= '0]';
+				$query .= '1]';
 			}
 			/*$query = 'for $attr in collection("cv")/cv ';
 			if(!empty($champs)) {
@@ -235,7 +235,7 @@ class Profil {
 		}
 		catch(Exception $e) {
 			// aucun cv trouvé
-			echo $e;
+			//echo $e;
 			return false;
 		}
 	}
