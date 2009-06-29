@@ -188,7 +188,7 @@ class Profil {
 			$cv = array();
 			
 			$xmlRequest = new XMLRequest(self::EXIST_ADMIN_LOGIN, self::EXIST_ADMIN_PASSWORD);
-			$query = 'collection("cv")/cv';
+			/*$query = 'collection("cv")/cv';
 			if(!empty($champs)) {
 				$query .= '[';
 				foreach ($champs as $key => $value) {
@@ -197,7 +197,16 @@ class Profil {
 					}
 				}
 				$query .= ']';
+			}*/
+			$query = 'for $attr in collection("cv")/cv ';
+			if(!empty($champs)) {
+				foreach ($champs as $key => $value) {
+					if(!empty($value)) {
+						$query .= 'where contains(' . $key . ', "' . $value . '") or contains($attr/node()/' . $key . ', "' . $value . '") ';
+					}
+				}
 			}
+			$query .= 'return $attr ';
 			$result = $xmlRequest->executeQuery($query);
 			
 			$data = '<liste-cv>';
@@ -222,7 +231,7 @@ class Profil {
 		}
 		catch(Exception $e) {
 			// aucun cv trouvé
-			//echo $e;
+			echo $e;
 			return false;
 		}
 	}
