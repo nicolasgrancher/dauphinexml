@@ -2,8 +2,8 @@
 
 class Profil {
 	const EXIST_ADMIN_LOGIN = 'admin';
-	//const EXIST_ADMIN_PASSWORD = 'admin';
-	const EXIST_ADMIN_PASSWORD = 'thetys647';
+	const EXIST_ADMIN_PASSWORD = 'admin';
+	//const EXIST_ADMIN_PASSWORD = 'thetys647';
 	
 	public $attributs;
 	private static $_listeAttributs = array('nom', 'prenom', 'age', 'experiences', 'formations', 'competences', 'divers');
@@ -193,21 +193,36 @@ class Profil {
 				$query .= '[';
 				foreach ($champs as $key => $value) {
 					if(!empty($value)) {
-						$query .= $key .'="' . $value . '"';
+						$query .= 'contains(' . $key .', "' . $value . '")';
 					}
 				}
 				$query .= ']';
 			}
-			$query .= '/nom/text()';
 			$result = $xmlRequest->executeQuery($query);
 			
-			$p = new Profil();
-			$p->login = $result["XML"];
-			$cv[] = $p;
-			return $cv;
+			$data = '<liste-cv>';
+			if(is_array($result['XML'])) {
+				foreach ($result['XML'] as $res) {
+					$data .= $res;
+				}
+			}else{
+				$data .= $result['XML'];
+			}
+			$data .= '</liste-cv>';
+			
+			$xml = new DOMDocument;
+			$xml->loadXML(trim($data));
+			$xsl = new DOMDocument;
+			$xsl->load('resources/resultat_recherche.xsl');
+			$proc = new XSLTProcessor;
+			$proc->importStyleSheet($xsl);
+			echo $proc->transformToXML($xml);
+			
+			return true;
 		}
 		catch(Exception $e) {
 			// aucun cv trouvé
+			//echo $e;
 			return false;
 		}
 	}

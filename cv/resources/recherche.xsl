@@ -18,16 +18,7 @@
     <xsl:template match="attribut[not(./attribut)]">
         <tr>
 		    <th><label for="{text()}"><xsl:value-of select="text()" /> : </label></th>
-		    <td>
-		        <xsl:choose>
-		            <xsl:when test="@input='textarea'">
-		                <textarea name="{text()}" rows="5" cols="30">.</textarea>
-		            </xsl:when>
-		            <xsl:otherwise>
-                        <input type="text" id="{text()}" name="{text()}" value="" />
-		            </xsl:otherwise>
-		        </xsl:choose>
-		    </td>
+		    <td><input type="text" id="{text()}" name="{text()}" value="" /></td>
 	    </tr>
     </xsl:template>
     
@@ -42,7 +33,7 @@
         </xsl:variable>
         <tr>
 		    <th><xsl:value-of select="text()" /> : </th>
-		    <td> <input type="text" id="{text()}" name="{text()}" value="" /></td>
+		    <td><input type="text" id="{text()}" name="{text()}" value="" /></td>
 	    </tr>
     </xsl:template>
 

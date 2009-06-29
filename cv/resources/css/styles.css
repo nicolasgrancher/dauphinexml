@@ -1,4 +1,42 @@
 @CHARSET "ISO-8859-1";
-form th {
+form {
+	margin: 0;
+	padding: 0;
+}
+
+hr {
+	background-color: #f4f8fb;
+	border-color: #f4f8fb;
+}
+
+table#mon_cv {
+	border-spacing: 0;
+}
+table th {
+	text-transform: capitalize;
+	vertical-align: top;
 	text-align: left;
+}
+table#mon_cv td table {
+	width: 100%;
+}
+
+input[type="text"], input[type="password"], textarea, input[type="submit"], input[type="button"] {
+	background-color: #f4f8fb;
+	border: 1px solid silver;
+	width: 200px;
+}
+input[type="submit"], input[type="button"] {
+	width: 100px;
+}
+input[type="submit"] {
+	height: 2em;
+}
+
+a {
+	color: #2C68A7;
+	text-decoration: none;
+}
+a:hover {
+	text-decoration: underline;
 }

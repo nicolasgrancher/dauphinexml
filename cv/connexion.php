@@ -6,7 +6,7 @@
 		</tr>
 		<tr>
 			<th><label for="mdp">Mot de pase : </label></th>
-			<td><input type="text" id="mdp" name="mdp" /></td>
+			<td><input type="password" id="mdp" name="mdp" /></td>
 		</tr>
 		<tr>
 			<td colspan="2"><input type="submit" value="Connexion" /></td>

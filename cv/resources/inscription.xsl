@@ -5,7 +5,7 @@
      
     <xsl:template match="/">
         <form method="post" action="">
-        	<table>
+        	<table id="mon_cv">
         	    <xsl:apply-templates select="attributs/attribut[not(./attribut)]" />
         	    <xsl:apply-templates select="attributs/attribut[./attribut]" />
         	    <tr>
@@ -62,7 +62,7 @@
 	                <xsl:apply-templates select="./attribut[./attribut]" /> -->
 		        </table>
 		    </td>
-            <td>
+            <td valign="bottom">
                 <input type="button" id="{text()}_add_button" onclick="addline(document.getElementById('{text()}'), new Array({$child-names}))" value='Ajouter'/>
                 <input type="button" id="{text()}_rem_button" onclick="remline(document.getElementById('{text()}'))" value='Supprimer' style="display: none"/>
             </td>
