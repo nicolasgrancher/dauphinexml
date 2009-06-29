@@ -9,13 +9,13 @@
     
     <xsl:template match="liste-cv/cv">
       	 <table>
-      		<xsl:apply-templates select="node()[text() and not(./node()/node())]" />
-      		<xsl:apply-templates select="node()[./node()/node()]" />
+      		<xsl:apply-templates select="node()[text() and not(node()/node())]" />
+      		<xsl:apply-templates select="node()[node()/node()]" />
       	 </table>
       	 <hr />
     </xsl:template>
     
-    <xsl:template match="node()[text() and not(./node()/node())]">
+    <xsl:template match="node()[text() and not(node()/node())]">
          <tr>
 		    <th><xsl:value-of select="name()" /> : </th>
 		    <td>
@@ -24,12 +24,12 @@
 	    </tr>
     </xsl:template>
     
-     <xsl:template match="node()[./node()/node()]">
+     <xsl:template match="node()[node()/node()]">
          <tr>
 		    <th><xsl:value-of select="name()" /> : </th>
 		    <td>
 		    	<table>
-               	<xsl:apply-templates select="node()[text() and not(./node()/node())]" />
+               	<xsl:apply-templates select="node()/node()[text() and not(node()/node())]" />
                </table>
 		    </td>
 	    </tr>
