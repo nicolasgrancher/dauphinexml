@@ -4,9 +4,17 @@ $profil->initEmpty();
 
 // traitement de l'action du formulaire
 if(!empty($_POST)) {
+    $profil->attributs = null;
 	foreach ($_POST as $key => $value) {
-		$profil->attributs[$key] = $value;
+	    if(preg_match('/^(.+)_row(\d)_(.+)$/', $key, $matches) != 0) {
+	        $profil->attributs[$matches[1]][$matches[2]][$matches[3]] = $value;
+	    } else {
+    		$profil->attributs[$key] = $value;
+	    }
 	}
+	//echo '<pre>';
+	//print_r($profil->attributs);
+	//echo '</pre>';
 	// enregistrement du profil
 	$profil->sauvegarder();
 }

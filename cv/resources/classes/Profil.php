@@ -2,8 +2,8 @@
 
 class Profil {
 	const EXIST_ADMIN_LOGIN = 'admin';
-	const EXIST_ADMIN_PASSWORD = 'admin';
-	//const EXIST_ADMIN_PASSWORD = 'thetys647';
+	//const EXIST_ADMIN_PASSWORD = 'admin';
+	const EXIST_ADMIN_PASSWORD = 'thetys647';
 	
 	public $attributs;
 	private static $_listeAttributs = array('nom', 'prenom', 'age', 'experiences', 'formations', 'competences', 'divers');
@@ -79,7 +79,21 @@ class Profil {
 		
 		$query = '<cv id="'.$this->login.'">';
 		foreach ($this->attributs as $key => $value) {
-			$query .= "<$key>$value</$key>";
+		    if(is_array($value)) {
+		        $query .= "<liste$key>";
+		        foreach ($value as $_value) {
+		            $query .= "<$key>";
+		            foreach ($_value as $__key => $__value) {
+		                if($__value != ".") {
+		                    $query .= "<$__key>".trim($__value)."</$__key>";
+		                }
+		            }
+		            $query .= "</$key>";
+		        } 
+		        $query .= "</liste$key>";
+		    } else {
+    			$query .= "<$key>".trim($value)."</$key>";
+			}
 		}
 		$query .= '</cv>';
 		
@@ -88,7 +102,7 @@ class Profil {
 	
 	function sauvegarder() {
 		$xmlRequest = new XMLRequest($this->login, $this->password);
-		$query = 'exists("cv/'.$this->login.'")';
+		$query = 'exists(document("cv/'.$this->login.'.xml"))';
 		$result = $xmlRequest->executeQuery($query);
 		if($result["XML"] == "false") {
 		    $this->creer();
@@ -104,7 +118,21 @@ class Profil {
 		$xupdate  = "<xupdate:modifications version='1.0' xmlns:xupdate='http://www.xmldb.org/xupdate'>";
 		$xupdate .= "	<xupdate:update select='//cv[@id=\"" . $this->login . "\"]'>";
 		foreach ($this->attributs as $key => $value) {
-			$xupdate .= "		<$key>$value</$key>";
+		    if(is_array($value)) {
+		        $xupdate .= "<liste$key>";
+		        foreach ($value as $_value) {
+		            $xupdate .= "<$key>";
+		            foreach ($_value as $__key => $__value) {
+		                if($__value != ".") {
+		                    $xupdate .= "<$__key>".trim($__value)."</$__key>";
+		                }
+		            }
+		            $xupdate .= "</$key>";
+		        } 
+		        $xupdate .= "</liste$key>";
+		    } else {
+    			$xupdate .= "<$key>".trim($value)."</$key>";
+			}
 		}
 		$xupdate .= "	</xupdate:update>";
 		$xupdate .= "</xupdate:modifications>";
