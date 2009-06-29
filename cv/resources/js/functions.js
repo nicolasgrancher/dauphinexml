@@ -15,4 +15,12 @@ function addline(table, params) {
         html = html + "</td></tr>";
     }
     cell.innerHTML = html + "</table>";
-} 
+    document.getElementById(table.id+'_rem_button').style.display = 'inline';
+}
+
+function remline(table) {
+    table.deleteRow(table.rows.length-1);
+    if(table.rows.length == 1) {
+        document.getElementById(table.id+'_rem_button').style.display = 'none';
+    }
+}

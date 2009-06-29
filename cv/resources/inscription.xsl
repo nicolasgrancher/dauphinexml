@@ -8,6 +8,9 @@
         	<table>
         	    <xsl:apply-templates select="attributs/attribut[not(./attribut)]" />
         	    <xsl:apply-templates select="attributs/attribut[./attribut]" />
+        	    <tr>
+			        <td colspan="2"><input type="submit" value="Enregistrer" /></td>
+		        </tr>
         	</table>
         </form>
     </xsl:template>
@@ -59,7 +62,10 @@
 	                <xsl:apply-templates select="./attribut[./attribut]" /> -->
 		        </table>
 		    </td>
-            <td><input type="button" onclick="addline(document.getElementById('{text()}'), new Array({$child-names}))" value='Ajouter'/></td>
+            <td>
+                <input type="button" id="{text()}_add_button" onclick="addline(document.getElementById('{text()}'), new Array({$child-names}))" value='Ajouter'/>
+                <input type="button" id="{text()}_rem_button" onclick="remline(document.getElementById('{text()}'))" value='Supprimer' style="display: none"/>
+            </td>
 	    </tr>
     </xsl:template>
     
