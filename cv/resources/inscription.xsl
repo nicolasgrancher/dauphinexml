@@ -74,7 +74,7 @@
         <xsl:param name="id"/>
         <xsl:choose>
             <xsl:when test="$node[@input='textarea']">
-                <textarea id="{concat($id,$node/text())}" name="{concat($id,$node/text())}" rows="5" cols="30">.</textarea>
+                <textarea id="{concat($id,$node/text())}" name="{concat($id,$node/text())}" rows="5" cols="30"><![CDATA[]]></textarea>
             </xsl:when>
             <xsl:otherwise>
                 <input type="text" id="{concat($id,$node/text())}" name="{concat($id,$node/text())}" value="" />
