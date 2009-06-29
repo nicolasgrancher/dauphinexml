@@ -25,14 +25,18 @@
     </xsl:template>
     
      <xsl:template match="node()[node()/node()]">
-         <tr>
-		    <th><xsl:value-of select="name()" /> : </th>
-		    <td>
-		    	<table>
-               	<xsl:apply-templates select="node()/node()[text() and not(node()/node())]" />
-               </table>
-		    </td>
-	    </tr>
+     	<xsl:choose>
+			<xsl:when test="node()/node()[text() and not(node()/node())]">
+		         <tr>
+				    <th><xsl:value-of select="name()" /> : </th>
+				    <td>
+				    	<table>
+		               		<xsl:apply-templates select="node()/node()[text() and not(node()/node())]" />
+						</table>
+				    </td>
+			    </tr>
+			</xsl:when>
+		</xsl:choose>
     </xsl:template>
     
 
