@@ -2,12 +2,12 @@
 
 class Profil {
 	const EXIST_ADMIN_LOGIN = 'admin';
-	//const EXIST_ADMIN_PASSWORD = 'admin';
-	const EXIST_ADMIN_PASSWORD = 'thetys647';
+	const EXIST_ADMIN_PASSWORD = 'admin';
+	//const EXIST_ADMIN_PASSWORD = 'thetys647';
 	
 	public $attributs;
 	private static $_listeAttributs = array('nom', 'prenom', 'age', 'experiences', 'formations', 'competences', 'divers');
-	private $login;
+	public $login;
 	private $password;
 	
 	function afficherFormulaire() {
@@ -135,5 +135,52 @@ class Profil {
         }else{
         	return false;
         }
+	}
+	
+	static function afficherFormulaireRecherche() {
+		$xmlRequest = new XMLRequest(self::EXIST_ADMIN_LOGIN, self::EXIST_ADMIN_PASSWORD);
+		$query = 'document("cv/config/attributs.xml")/attributs';
+		$result = $xmlRequest->executeQuery($query);
+		
+		$xml = new DOMDocument;
+		$xml->loadXML(trim($result["XML"]));
+		
+		$xsl = new DOMDocument;
+		$xsl->load('resources/recherche.xsl');
+		
+		// Configuration du transformateur
+		$proc = new XSLTProcessor;
+		$proc->importStyleSheet($xsl); // attachement des règles xsl
+		
+		echo $proc->transformToXML($xml);
+	}
+	
+	static function rechercherCV($champs=array()) {
+		try {
+			$cv = array();
+			
+			$xmlRequest = new XMLRequest(self::EXIST_ADMIN_LOGIN, self::EXIST_ADMIN_PASSWORD);
+			$query = 'collection("cv")/cv';
+			if(!empty($champs)) {
+				$query .= '[';
+				foreach ($champs as $key => $value) {
+					if(!empty($value)) {
+						$query .= $key .'="' . $value . '"';
+					}
+				}
+				$query .= ']';
+			}
+			$query .= '/nom/text()';
+			$result = $xmlRequest->executeQuery($query);
+			
+			$p = new Profil();
+			$p->login = $result["XML"];
+			$cv[] = $p;
+			return $cv;
+		}
+		catch(Exception $e) {
+			// aucun cv trouvé
+			return false;
+		}
 	}
 }
