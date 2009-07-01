@@ -8,7 +8,7 @@ function addline(table, params) {
     for(elem in params) {
         html = html + "<tr><td>"+params[elem][0]+"</td><td>";
         if(params[elem][1] == 'textarea') {
-            html = html + "<textarea id='"+row.id+"_"+params[elem][0]+"' cols='30' rows='5' name='"+row.id+"_"+params[elem][0]+"'>.</textarea>";
+            html = html + "<textarea id='"+row.id+"_"+params[elem][0]+"' cols='30' rows='5' name='"+row.id+"_"+params[elem][0]+"'></textarea>";
         } else {
             html = html + "<input type='text' id='"+row.id+"_"+params[elem][0]+"' name='"+row.id+"_"+params[elem][0]+"'/>";
         }
