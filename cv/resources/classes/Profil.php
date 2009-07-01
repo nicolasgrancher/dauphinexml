@@ -11,7 +11,7 @@ class Profil {
 	private $password;
 	
 	function afficherFormulaire() {
-	    $xmlRequest = new XMLRequest(self::EXIST_ADMIN_LOGIN, self::EXIST_ADMIN_PASSWORD);
+	    $xmlRequest = new XMLRequest($this->login, $this->password);
 		$query = 'exists(document("cv/'.$this->login.'.xml"))';
 		$result = $xmlRequest->executeQuery($query);
 		if($result["XML"] == "false") {
@@ -19,10 +19,10 @@ class Profil {
 	        $result = $xmlRequest->executeQuery($query);
 	
 	        $xml = new DOMDocument;
-            $xml->loadXML(trim($result["XML"]));
+            $xml->loadXML('<doc>'.trim($result["XML"].'</doc>'));
 
             $xsl = new DOMDocument;
-            $xsl->load('resources/inscription.xsl');
+            $xsl->load('resources/deja_inscrit.xsl');
 
             // Configuration du transformateur
             $proc = new XSLTProcessor;
@@ -31,7 +31,24 @@ class Profil {
             echo $proc->transformToXML($xml);
             
         } elseif($result["XML"] == "true") {
-        
+            $query = 'document("cv/'.$this->login.'.xml")/cv';
+	        $result = $xmlRequest->executeQuery($query);
+	        
+	        $query = 'document("cv/config/attributs.xml")/attributs';
+	        $attributs = $xmlRequest->executeQuery($query);
+	
+	        $xml = new DOMDocument;
+            $xml->loadXML('<doc>'.trim($result["XML"]).trim($attributs["XML"]."</doc>"));
+
+            $xsl = new DOMDocument;
+            //$xsl->load('resources/deja_inscrit.xsl');
+            $xsl->load('resources/deja_inscrit.xsl');
+
+            // Configuration du transformateur
+            $proc = new XSLTProcessor;
+            $proc->importStyleSheet($xsl); // attachement des règles xsl
+
+            echo $proc->transformToXML($xml);
         } else {
 		    throw new Exception("Erreur durant l'affichage.");
 		}
@@ -157,6 +174,13 @@ class Profil {
         $xmlRequest = new XMLRequest(self::EXIST_ADMIN_LOGIN, self::EXIST_ADMIN_PASSWORD);
         $result = $xmlRequest->executeQuery($query);
         if(isset($result["XML"]) && $result["XML"] == "true"){
+            try {
+                $xmlRequest = new XMLRequest($login, $password);
+                $query = 'xmldb:exists-user("'.$login.'")';
+                $result = $xmlRequest->executeQuery($query);
+            } catch (Exception $e) {
+                return false;
+            }
             $this->login = $login;
             $this->password = $password;
             return true;

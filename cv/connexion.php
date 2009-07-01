@@ -5,7 +5,7 @@
 			<td><input type="text" id="login" name="login" /></td>
 		</tr>
 		<tr>
-			<th><label for="mdp">Mot de pase : </label></th>
+			<th><label for="mdp">Mot de passe : </label></th>
 			<td><input type="password" id="mdp" name="mdp" /></td>
 		</tr>
 		<tr>
